@@ -104,11 +104,18 @@ export async function createInvoice(prevState: State, formData: FormData) {
 }
 
 export async function updateInvoice(id: string, prevState: State, formData: FormData) {
-	// Validate form using zod
-	const validatedFields = UpdateInvoice.safeParse({
-		customerId:formData.get('customerId')?.toString() || '',
+	// Collect form values
+	const fieldValues = {
+		customerId: formData.get('customerId')?.toString() || '',
 		amount: formData.get('amount')?.toString() || '',
 		status: formData.get('status')?.toString() || ''
+	}
+
+	// Validate form using zod
+	const validatedFields = UpdateInvoice.safeParse({
+		customerId: fieldValues.customerId,
+		amount: fieldValues.amount,
+		status: fieldValues.status
 	});
 
 	// If form validation fails, return errors early. Otherwise, continue
@@ -135,7 +142,7 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
 		// If a database error occurs, return a more specific error
 		return {
 			message: 'Database Error: Failed to Update Invoice',
-			fields: validatedFields
+			fields: fieldValues
 		};
 	}
 	
