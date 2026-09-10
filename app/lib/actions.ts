@@ -58,9 +58,9 @@ export async function authenticate(prevState: string | undefined, formData: Form
 export async function createInvoice(prevState: State, formData: FormData) {
 	// Collect form values
 	const fieldValues = {
-		customerId: formData.get('customerId'),
-		amount: formData.get('amount'),
-		status: formData.get('status')
+		customerId: formData.get('customerId').toString(),
+		amount: formData.get('amount').toString(),
+		status: formData.get('status').toString
 	}
 
 	// Validate form using zod
@@ -93,7 +93,9 @@ export async function createInvoice(prevState: State, formData: FormData) {
 	} catch (error) {
 		// If a database error occurs, return a more specific error
 		return {
-			message: 'Database Error: Failed to Create Invoice'
+			errors: {},
+      message: 'Database Error: Failed to Create Invoice',
+      fields: fieldValues
 		};
 	}
 	
