@@ -32,9 +32,9 @@ export type State = {
 	};
 	message?: string | null;
 	fields?: {
-		customerId?: string | null;
-		amount?: string | null;
-		status?: string | null;
+		customerId?: string;
+		amount?: string;
+		status?: string;
 	}
 }
 
