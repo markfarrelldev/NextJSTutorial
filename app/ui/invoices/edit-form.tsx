@@ -21,8 +21,12 @@ export default function EditInvoiceForm({
 }) {
 
   const initialState: State = { message: null, errors: {}, fields: {customerId: "", amount: "", status: ""} };
-  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-  const [state, formAction] = useActionState(updateInvoiceWithId, initialState);
+  //const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+  const [state, formAction] = useActionState(
+    async (prevState: State, formData: FormData) => {
+      return await updateInvoice(invoice.id, prevState, formData)
+    }, initialState
+  );
 
   return (
     <form action={formAction as any} aria-describedby="form-error">
